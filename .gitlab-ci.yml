@@ -1,0 +1,34 @@
+image: node:latest
+services:
+  - mongo:latest
+  - rabbitmq:3.7-management
+variables:
+  RABBITMQ_DEFAULT_USER: rabbitmquser
+  RABBITMQ_DEFAULT_PASS: rabbitmqpassword
+stages:
+  - start
+  - test
+start:
+  stage: start
+  before_script:
+    - npm install
+  script:
+    - npm start -- ci &
+    - sleep 30
+    - kill -9 $(ps aux | grep '\snode\s' | awk '{print $2}')
+test:
+  stage: test
+  before_script:
+    - npm install
+    - chmod +x ./serverstart_ci.sh
+    - ./serverstart_ci.sh
+  script:
+    - npm test -- --ci
+  after_script:
+    - kill -9 $(ps aux | grep '\snode\s' | awk '{print $2}')
+  artifacts:
+    when: always
+    paths:
+      - ./tests/test_reports/test-report.html
+
+

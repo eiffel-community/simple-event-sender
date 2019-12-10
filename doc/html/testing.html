@@ -1,0 +1,107 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Testing &#8212; wiki  documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="#" />
+    <link rel="search" title="Search" href="search.html" />
+
+    <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+</head><body>
+
+
+<div class="document">
+    <div class="documentwrapper">
+        <div class="bodywrapper">
+
+
+            <div class="body" role="main">
+
+
+                <h1 id="index">Testing</h1>
+
+                <div class="genindex-jumpbox">
+                    <h2>Intro</h2>
+                    <p>The tests are made to meet the specified requirements in the SRS, not in collaboration with developers. This is because the testing should be independently done with regards to the development of the product. Each requirement is broken down into test cases, where each test case is labeled with a test id. The test id:s for a specific requirement together validate the requirement. Most requirements are split into two test cases, one with positive formulation and one with negative formulation. Positive formulation means that a feature of the product regarding the requirement is tested with expected outcome. Negative formulation means that the test purposely uses the product incorrectly with expected error message. The tests are based on the framework Jest. </p>
+                    <h2>Structure and standards of the test files </h2>
+                    <p>In the repository for the project, there exists a map called “tests”. Each requirement has a file in this map called “FRXX.test.js”, where XX is the requirement number. Each file contains all test cases for respective requirement. In the test files, each test is named "Test id:YY for FRXX", where YY is the test id number and XX is the requirement number. </p>
+                    <h2>How to run tests</h2>
+                    <h3>Single tests</h3>
+                    <p>In order to be able to run tests for individual requirement, following line needs to be run:
+                    </p>
+                    <code>npm i -g jest-cli</code>
+
+                    <p> Make sure that the server is up and running by executing the following line: </p>
+                    <code>docker-compose up</code>
+                    <p>Open a terminal in the “test”-folder and run: </p>
+                    <code>jest FR[XX].test.js</code>
+                    <p>Where [XX] is the requirement number. This will run the test cases for one test and output the test results, displaying any error codes. </p>
+                    <h3>Entire test suite</h3>
+                    <p>Make sure that the server is up and running by executing the following line: </p>
+                    <code>docker-compose up</code>
+                    <p>Open a terminal in the base of the project repo and run: </p>
+                    <code>npm test</code>
+                    <p>This will run the entire test suite (files in the repo with the ending “.test.js”) and output the test results, displaying error codes for the failed tests.</p>
+
+                    <h2> Continuous Integration</h2>
+                    <p>When a push to the repository is made your code is compiled and is run on the Gitlab CI/CD. The current CI settings and scripts are specified in the file .gitlab-ci.yml. </p>
+
+                    <h2>CI stages:</h2>
+                    <ul>
+                        <li>start: Runs the application for 30 secounds. Fails if the application crashes during this time.
+                        <li>test: Runs the tests specified in the /test directory. Fails if any test is failed. (Click on the job to view the console output and view which tests passed/failed)</li>
+                    </ul>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <h1 class="logo"><a href="../wiki.html">HOME</a></h1>
+            <img src="../img/logo_white.png" alt="evsent logo">
+            <script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+    </div>
+    <div class="clearer"></div>
+</div>
+<div class="footer">
+    &copy;2019, Evsent.
+
+    |
+    Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+    &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+
+</div>
+
+
+
+
+</body>
+</html>

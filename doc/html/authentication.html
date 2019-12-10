@@ -1,0 +1,106 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Authentication &#8212; wiki  documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="#" />
+    <link rel="search" title="Search" href="search.html" />
+
+    <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+</head><body>
+
+
+<div class="document">
+    <div class="documentwrapper">
+        <div class="bodywrapper">
+
+
+            <div class="body" role="main">
+
+
+                <h1 id="index">Authentication</h1>
+
+                <div class="genindex-jumpbox">
+                    <h2>User database with mock user</h2>
+                    <p>The SimpleEventSender is connected to user database hosted in mongoDB.
+                        This database contains one mock user, “Albin” who has a set password: “password123”.
+                        The password is not stored in plain text but instead stored after hashing is complete.</p>
+                    <code>
+                    {
+                    "name": "username", "password": "password"
+                    }
+                    </code>
+
+                    <h2>Hashing of passwords </h2>
+                    <p>The user passwords are hashed through the bcrypt hash function.
+                        This is done by first generating a “Salt” and then using this generated salt for hashing a password.
+                        This is then stored alongside the user mongoDB.
+                        When a user logs in, the entered password is hashed with the salt and compared with the hashed password
+                        located in the userDB. This is done using the bcrypt.compare function. Depending on if the password entered
+                        matches with the one found in the database during the comparison the user is either allowed access and
+                        given a authentication token or denied access. </p>
+
+                    <h2>Token generation and verification </h2>
+                    <p>When a user has logged in successfully a token will be sent back to the user inside of the response header under the key name ‘auth-token’. This token is generated using JSON Web Token. This token will then be used by the user in order to verify themselves when creating POST requests on the submitEventController.
+                        The token is generated in the loginController using JWToken.sign and the verifications of tokens is done
+                        through a middleware function which utilizes JWToken.verify. This middleware function will pass the POST request
+                        onto the submitEventController if the verification is successful, this is done using the next() function.
+                        Otherwise the request will be blocked from ever reaching the Submit Event Controller.  </p>
+                    <h2>Mock user for /login route</h2>
+                    <p>The current version of The Simple Event Sender uses a hard-coded user for testing basic authentication functionality. It is currently created on server start in the server.js file, unless it’s previously been created and already exists in the user database. This functionality could easily be moved into its own /createUser endpoint in the future for a more realistic real-life approach. This endpoint could be configured using existing functionality and only swapping out the hard-coded variables to instead retrieve them from ex. the HTTPs body request. </p>
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <h1 class="logo"><a href="../wiki.html">HOME</a></h1>
+            <img src="../img/logo_white.png" alt="evsent logo">
+            <script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+    </div>
+    <div class="clearer"></div>
+</div>
+<div class="footer">
+    &copy;2019, Evsent.
+
+    |
+    Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+    &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+
+</div>
+
+
+
+
+</body>
+</html>

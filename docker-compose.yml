@@ -1,0 +1,50 @@
+version: "2.1"
+
+volumes:
+    mongodb_data:
+      driver: local
+    rabbitmqdata:
+      driver: local  
+
+services:
+  mongo:
+    container_name: mongo
+    image: mongo
+    volumes:
+      - mongodb_data:/data/db 
+    ports:
+      - "27017:27017"
+    restart: always
+    logging:
+      driver: none 
+  app:
+    container_name: simple_event_sender
+    restart: always
+    build: .
+    command: npm start
+    volumes:
+      - .:/simple_event_sender
+      - ./node_modules
+    ports:
+      - "9000:9000"
+    links:
+      - mongo
+      - rabbitmq
+    environment:
+      WAIT_HOSTS: mongo:27017, rabbitmq:5672
+  rabbitmq:
+   image: rabbitmq:3.7-management
+   container_name: rabbitmq
+   hostname: rabbitmq
+   logging:
+       driver: none 
+   volumes:
+     - rabbitmqdata:/var/lib/rabbitmq
+   ports:
+     - "15672:15672"
+     - "5672:5672"
+   environment:
+     - RABBITMQ_DEFAULT_USER=rabbitmquser
+     - RABBITMQ_DEFAULT_PASS=rabbitmqpassword
+   
+    

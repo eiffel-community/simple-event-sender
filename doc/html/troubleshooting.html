@@ -1,0 +1,124 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Troubleshooting &#8212; wiki  documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="#" />
+    <link rel="search" title="Search" href="search.html" />
+
+    <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+</head><body>
+
+
+<div class="document">
+    <div class="documentwrapper">
+        <div class="bodywrapper">
+
+
+            <div class="body" role="main">
+
+
+                <h1 id="index">Docker tips, tricks and troubleshooting</h1>
+
+                <div class="genindex-jumpbox">
+
+                    <h2>MongoDB with Docker</h2>
+<ul>
+                    <li><p>You can access the MongoDB running in the Docker image through the terminal.
+                        To enter the image "OS" run: <code>exec -it mongo /bin/bash</code></p></li>
+
+
+                   <li><p>To access the database run: <code>mongo</code></p></li>
+</ul>
+
+                    <p> You can now use MongoDB commands like you normally would, <code>show dbs</code>,
+                        <code>db.dropDatabase()</code> etc.</p>
+
+                    <p>To enter the database "eventDB" that contains all the events write use <code>eventDB</code>.</p>
+                    <p>To show what type of events that exist in the database write <code>show collections</code>.
+                    </p>
+                    <p>To display the json-object that actually exists in the database write eg
+                        <code>db.EiffelArtifactCreatedEvent.find({})</code>.</p>
+                    <p>To drop the whole database write <code>db.dropDatabase()</code>.</p>
+
+                    <h2>Clear images and disk space</h2>
+
+                    <p>Docker images take up a lot of space.</p>
+
+                    <ul>
+                        <li>Run <code>docker images</code> to see how many you have and how much space the take up.</li>
+                    </ul>
+
+                    <p>To clear the saved images run:</p>
+
+                    <ul>
+                        <li>Run <code>docker image prune</code> to see how many you have and how much space the take up.</li>
+                    </ul>
+
+                    <h2>Troubleshooting Docker for Windows</h2>
+
+                    <p>If you receive the following error:</p>
+
+                    <p>ERROR: for mongo Cannot create container for service mongo: b'Drive has not been shared'</p>
+
+                    Follow these steps to solve it:
+
+                    <ol>
+                        <li>Type the following in cmd/Powershell <code>set COMPOSE_CONVERT_WINDOWS_PATHS=1</code></code></li>
+                        <li>Restart Docker</li>
+                        <li>Go to Settings in Docker->Shared Drives->-Reset credentials->-Select drive->Apply</li>
+                    </ol>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <h1 class="logo"><a href="../wiki.html">HOME</a></h1>
+            <img src="../img/logo_white.png" alt="evsent logo">
+            <script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+    </div>
+    <div class="clearer"></div>
+</div>
+<div class="footer">
+    &copy;2019, Evsent.
+
+    |
+    Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+    &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+
+</div>
+
+
+
+
+</body>
+</html>

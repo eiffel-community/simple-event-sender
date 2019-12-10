@@ -1,0 +1,84 @@
+version: "2"
+
+services:
+  mongo:
+    container_name: mongo
+    image: mongo
+    environment:
+      # provide your credentials here
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=rootPassword
+    volumes:
+      - $PWD/mongo-scripts/:/docker-entrypoint-initdb.d/
+      - mongodb_data:/data/db
+    ports:
+      - "27017:27017"
+    restart: always
+    command: mongod
+  simple_event_sender:
+    container_name: simple_event_sender
+    restart: always
+    build: .
+    ports:
+      - "9000:3000"
+    links:
+      - mongo
+      - rabbitmq
+    environment:
+      WAIT_HOSTS: mongo:27017, rabbitmq:5672
+  webserver:
+    image: nginx:mainline-alpine
+    container_name: webserver
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - web-root:/var/www/html
+      - ./nginx-conf:/etc/nginx/conf.d
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+      - dhparam:/etc/ssl/certs
+    depends_on:
+      - simple_event_sender
+  rabbitmq:
+    image: rabbitmq:3.7-management
+    container_name: rabbitmq
+    hostname: rabbitmq
+    volumes:
+      - rabbitmqdata:/var/lib/rabbitmq
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=rabbitmquser
+      - RABBITMQ_DEFAULT_PASS=rabbitmqpassword
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+      - web-root:/var/www/html
+    depends_on:
+      - webserver
+    command: certonly --webroot --webroot-path=/var/www/html --email user_name@domain.name --agree-tos --no-eff-email --force-renewal -d domain.name
+volumes:
+   mongodb_data:
+     driver: local
+   rabbitmqdata:
+     driver: local
+   certbot-etc:
+   certbot-var:
+   web-root:
+     driver: local
+     driver_opts:
+       type: none
+       device: /home/user_name/app/views/
+       o: bind
+   dhparam:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/user_name/app/dhparam/
+      o: bind

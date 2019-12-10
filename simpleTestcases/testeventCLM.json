@@ -1,0 +1,61 @@
+{
+"eiffelDataObj" : {
+ "meta": {
+   "type": "EiffelConfidenceLevelModifiedEvent",
+   "version": "3.0.0",
+   "time": 1234567890,
+   "id": "aaaaaaaa-bbbb-5ccc-8ddd-eeeeeeeeeee7"
+ },
+ "data": {
+   "name": "stable",
+   "value": "SUCCESS",
+   "issuer": {
+     "name": "Gary Johnston",
+     "email": "gary.johnston@teamamerica.com",
+     "id": "garyj",
+     "group": "Team America"
+   }
+ },
+ "links": [
+   {
+     "type": "CAUSE",
+     "target": "aaaaaaaa-bbbb-5ccc-8ddd-eeeeeeeeeee1"
+   },
+   {
+     "type": "CAUSE",
+     "target": "aaaaaaaa-bbbb-5ccc-8ddd-eeeeeeeeeee2"
+   },
+   {
+     "type": "SUBJECT",
+     "target": "aaaaaaaa-bbbb-5ccc-8ddd-eeeeeeeeeee3"
+   },
+   {
+     "type": "SUBJECT",
+     "target": "aaaaaaaa-bbbb-5ccc-8ddd-eeeeeeeeeee4"
+   },
+   {
+     "type": "SUB_CONFIDENCE_LEVEL",
+     "target": "aaaaaaaa-bbbb-5ccc-8ddd-eeeeeeeeeee5"
+   },
+   {
+     "type": "SUB_CONFIDENCE_LEVEL",
+     "target": "aaaaaaaa-bbbb-5ccc-8ddd-eeeeeeeeeee6"
+   }
+ ]
+} ,
+"parameterObj" : {
+    "sendToMessageBus" : true,
+    "edition" : "agen-1"
+},
+"lookupObj": {
+	"links": [
+        { "linkType": "SUB_CONFIDENCE_LEVEL",
+          "allowSeveralMatches": true,
+          "allowMissingMatch": true,
+          "query": {
+              "meta.id" :"aaaaaaaa-bbbb-5ccc-8ddd-eeeeeeeeeee0"
+          }
+        }
+    ]
+}
+}

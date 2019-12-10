@@ -1,0 +1,5 @@
+Use Postman to make post-requests.
+
+Submit the event in testEventAC.json to create an Artifact Created event that will appear in the database.
+
+Submit the event in testEventCLM.json to create a Confidence Level Modified event that will use lookup to link to the first event.

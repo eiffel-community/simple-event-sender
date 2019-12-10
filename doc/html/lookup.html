@@ -1,0 +1,86 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Lookup &#8212; wiki  documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="#" />
+    <link rel="search" title="Search" href="search.html" />
+
+    <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+</head><body>
+
+
+<div class="document">
+    <div class="documentwrapper">
+        <div class="bodywrapper">
+
+
+            <div class="body" role="main">
+
+
+                <h1 id="index">Lookup</h1>
+
+                <div class="genindex-jumpbox">
+                    <p>The main purpose of the Lookup function is to find and gather links that are missing in the event. In order to find links, an object lookupObj is needed in the JSON-object that we get from the client. As seen in the explanation about the lookupObj above, it includes what kind of links should be found and queries to be used when searching for the link in the database. For each link, parameters such as allowSeveralMatches and allowMissingMatch are given so we can set constraints for how many links we can collect from the database, only one or several.
+
+In our search, we use the function findLinkIDs in the file DataFetcher:  </p>
+                    <code>FindlinkIDs(dataObject, element.query, element.linkType, element.allowSeveralMatches, element.allowMissingMatch) </code>
+                    <p>If allowMissingMatch is false, and we can’t find links, or the right kind of links, the event will be rejected. If all collected links are correct according to parameters and constraints for the specific event (eiffelDataObj), links will be added to the event and be given a new UUID and a new timestamp. </p>
+                    <p>If the lookupobject is not included in the JSON event, a search will not be done, meaning the lookupfunction will not be used. </p>
+                    <p>As mentioned above, one of the main purposes of the lookupfunction is to find and retrieve links which have been provided in the lookup object. In doing this, the method findLinkIDs is used. Provided with information from the lookup object and parameterObject, findLinkIDs it will handle all possible cases of combinations of correct and incorrect links. One particular case to look for, and to handle in future development is the case that a non-legal target is provided in the lookup object.  </p>
+                    <p>As of now, when looking for links in the database to retrieve and link to the dataobject, findLinksIDs will only look for legal targets, meaning that if there is a link in the database which corresponds to the ID provided in the lookup object, it will not be found. This means that as long as allowMissingMatches is true, non-legal matches and missing matches will be handled in the same way, and the application will not throw an error. Although there can never be an incorrectly formatted event using this solution, the user will not know if the link provided in the lookup object is missing in the database or is present but invalid. </p>
+                    <p>Going forward with this “problem” and solving it, our suggestion is that the implementation would follow that of the linkCheckDB, which is used to validate the event and check that all links in an event corresponds to a legal target. The main difference between these two methods is that when looking in the database, findLinkIDs will only search for legal targets, while linkCheckDB will query across the whole database for the provided ID and be able to tell whether the event is missing or simply an illegal target. </p>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <h1 class="logo"><a href="../wiki.html">HOME</a></h1>
+            <img src="../img/logo_white.png" alt="evsent logo">
+            <script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+    </div>
+    <div class="clearer"></div>
+</div>
+<div class="footer">
+    &copy;2019, Evsent.
+
+    |
+    Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+    &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+
+</div>
+
+
+
+
+</body>
+</html>

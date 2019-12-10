@@ -1,0 +1,153 @@
+
+doctype html
+
+//  Copyright 2019 Evsent
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+
+
+html
+    head 
+
+    body 
+        h1 Evsent tester
+        h2 Login
+        // Form for logging in
+        form(id='loginForm')
+            div.form-group
+                label(for='username') Username:
+                input(type='text', placeholder= 'username',name='username', id='username') 
+            div.form-group
+                label(for='password') Password:
+                input(type='password', placeholder='password', name='password', id='password')
+            div.form-group 
+                label(for='login') Login:
+                button(type='submit', id='login') login
+        h2 Send event   
+        // Form for sending an eiffel event
+        form(id='sendForm')
+            div.form-group
+                label(for='eiffelDatas') Eiffel data:
+                input(type='text', id='eiffelDatas', placeholder='Paste eiffel data here')
+            div.form-group
+                label(for='lookUp') Look up data:
+                input(type='text', id='lookUp', placeholder='Paste lookup data here')
+            div.form-group
+                label(for='sendMessageToBus') Send to message bus
+                input(type='checkbox', id='sendMessageToBus', checked='checked')
+            div.form-group
+                label(for='edition') Edition:
+                input(type='text', id='edition', placeholder='Edition name')
+            div.form-group
+                label(for='submitBtn') send event:
+                button(type='submit', id='submitBtn') send
+
+        
+        script. 
+            //  Script for sending the information in the send-event-form as a correctly
+            //  formatted JSON file to the /submitevent-route of the serer api. 
+            //  The requests also caontains the JWT authorization token in its header. 
+            //  The response from submitevent post request is also handled. 
+           sendForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                var token = sessionStorage.getItem('token');
+                var eiffelDataObj = document.getElementById('eiffelDatas').value;
+                var lookupObj = document.getElementById('lookUp').value;
+                var SMTB = document.getElementById('sendMessageToBus').checked;
+                var edt = document.getElementById('edition').value;
+                if (edt != "" && SMTB == false) {
+                    var parameterObj = {
+                        edition: edt, 
+                        sendMessageToBus: false,
+                    }
+                } else if (edt != "" && SMTB == true) {
+                    var parameterObj = {
+                        edition: edt
+                    }
+                } else if (edt == "" && SMTB == false) {
+                    var parameterObj = {
+                        edition: 'agen-1',
+                        sendToMessageBus: false
+                    }
+                } else {
+                    var parameterObj = {
+                        edition: 'agen-1', 
+                        sendToMessageBus: true
+                    }
+                    console.log("parameterobject is agen-1")
+                }
+                if (lookupObj != "") {
+                var data = {
+                    eiffelDataObj,
+                    lookupObj,
+                    parameterObj
+                }
+                } else {
+                   var data ={
+                    eiffelDataObj,
+                    parameterObj 
+                   }
+                }
+
+            fetch('/submitevent', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-type': 'application/json',
+                    'auth-token': token
+                },
+                body: JSON.stringify(data)
+            }).then(function(response) {
+                response.text().then(function(parsedText) {
+                    alert(parsedText);
+                })
+            })
+            })
+
+            //  Script for makeing a POST request to server /login route.
+            //  Sends a JSON formatted according to server api.
+            //  Handles response from the POST request, if successfuly logged in
+            //  stores the returned JWT token in session storage. 
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                var name = document.getElementById("username").value;
+                var password = document.getElementById("password").value;
+            fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name,
+                    password
+                })
+            }).then(function(response) {
+                if (response.status === 200) {
+                    sessionStorage.setItem('token', response.headers.get('auth-token'));
+                }
+                response.text().then(function(parsedText) {
+                    alert(parsedText);
+                })
+            })
+            })
+
+              
+    
+
+            
+    
+
+
+

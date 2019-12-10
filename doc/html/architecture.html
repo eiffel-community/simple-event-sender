@@ -1,0 +1,83 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Architecture &#8212; wiki  documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="#" />
+    <link rel="search" title="Search" href="search.html" />
+
+    <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+</head><body>
+
+
+<div class="document">
+    <div class="documentwrapper">
+        <div class="bodywrapper">
+
+
+            <div class="body" role="main">
+
+
+                <h1 id="index">Architecture</h1>
+
+                <div class="genindex-jumpbox">
+                    <p>Input comes from a user, either human or robot, who is validated through a token over an HTTPS connection. The input from the client contains data to be used in the creation of an Eiffel event that the application will fill out and complete. Through a REST-API, the application uses the user-token to authenticate the user (userDB) as well as receive the incomplete event. In this stage, the application will go through the intrinsic validation process using local, pre-downloaded Eiffel-schemas, to validate the user input. If the initial validation is successful, the application will proceed to generate missing fields. This includes timestamp, UUID and any missing links which are provided in the lookupobject. This is done by adding links to the JSON object which is the Eiffel-event as well as validating the link against the DB to confirm that it is a legal target. Once the links have been fetched and fields generated, the event will once more be validated, intrinsically and externally against the DB to ensure that all links are correct. When the event is finalized, it will be sent to the RabbitMQ-interface, this interface will do three things: save the event to the eventDB, generate a response to the user (“successfully created event”) as well as output the JSON data over AMQP to the message bus.
+
+
+
+If any errors are generated along the way, they are casted to the client as an error code with a message describing what went wrong. </p>
+<img src="../img/architecture.png" alt="architecture-img">
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <h1 class="logo"><a href="../wiki.html">HOME</a></h1>
+            <img src="../img/logo_white.png" alt="evsent logo">
+            <script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+    </div>
+    <div class="clearer"></div>
+</div>
+<div class="footer">
+    &copy;2019, Evsent.
+
+    |
+    Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+    &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+
+</div>
+
+
+
+
+</body>
+</html>

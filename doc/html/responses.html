@@ -1,0 +1,187 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Responses &#8212; wiki  documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="#" />
+    <link rel="search" title="Search" href="search.html" />
+
+    <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+</head><body>
+
+
+<div class="document">
+    <div class="documentwrapper">
+        <div class="bodywrapper">
+
+
+            <div class="body" role="main">
+
+
+                <h1 id="index">Responses</h1>
+
+                <div class="genindex-jumpbox">
+                    There are three types of respones cases from the server to the client that are possible.
+                    <h2>Response case 1: Successfully created event</h2>
+                    <p>The response consists of 2 parts:
+                    <ul>
+                        <li>status : Status value 200 </li>
+                        <li>json: Sends json object body that contains two fields “message” and “event”, where “message” contains a message that informs about that the event was successfully created in text as "Successfully created event". The json object is constructed as follows: </li>
+                        <code>{message: "Successfully created event", event : event} </code>
+                    </ul></p>
+                    <h2>Response case 2: Authorization successful</h2>
+                    <p>The response consists of 2 parts:</p>
+                    <ul>
+                        <li>status : Status value 200  </li>
+                        <li>json: Sends json sting to the body containing the message “Authorization successful”. </li>
+                    </ul>
+                    <h2>Response case 3: EventSenderErrorCode</h2>
+                    <p>The response consists of 3 parts:
+                    <ul>
+                        <li>status : Status code 403 </li>
+                        <li>header: Contains a specific error code with the field "EventSenderErrorCode" that can possess any of the error codes in the table below</li>
+                        <li>json: Sends json object body that contains two fields “Error Type” and “Error message”, where “Error Type” are specified in Table 1 and “Error Message” contains a message that is generated where the validation throws an error, that specifies relevant information the validation error.
+                            The json object is constructed as follows: </li>
+                        <code>{"Error Type" : exception.errorType, "Error Message" : exception.message} </code>
+                    </ul></p>
+                    <h2>Error codes</h2>
+                    <table width="100%" border="1">
+                        <tr>
+                            <th>Error Code</th>
+                            <th>Error Situation</th>
+                        </tr>
+                        <tr>
+                            <th colspan="2">EventSenderException [1000]</th>
+                        </tr>
+                        <tr>
+                            <td>INVALID_OBJECT_CREATED</td>
+                            <td>An invalid object was created</td>
+                        </tr>
+                        <tr>
+                            <th colspan="2">AuthorizationException [1100]</th>
+                        </tr>
+                        <tr>
+                            <td>BAD_PASSWORD</td>
+                            <td>User entered wrong password</td>
+                        </tr>
+                        <tr>
+                            <td>BAD_USERNAME</td>
+                            <td>Username not found in database</td>
+                        </tr>
+                        <tr>
+                            <td>BAD_TOKEN</td>
+                            <td>Token missing or illegal token</td>
+                        </tr>
+                        <tr>
+                            <th colspan="2">RabbitMQException [1200]</th>
+                        </tr>
+                        <tr>
+                            <td>CONNECTION_ERROR</td>
+                            <td>Token missing or illegal token</td>
+                        </tr>
+                        <tr>
+                            <td>CHANNEL_ERROR</td>
+                            <td>Problem with creating RabbitMQ channel</td>
+                        </tr>
+                        <tr>
+                            <th colspan="2">EiffelException [1300]</th>
+                        </tr>
+                        <tr>
+                            <td>INVALID_PARAMETER_OBJECT</td>
+                            <td>Parameter object does not match parameter schema</td>
+                        </tr>
+                        <tr>
+                            <td>UNSUPPORTED_EDITION</td>
+                            <td>Not latest edition from client </td>
+                        </tr>
+                        <tr>
+                            <td>INVALID_SCHEMA</td>
+                            <td>Occurs when node.js schema validator (ajv) detects an invalid schema</td>
+                        </tr>
+                        <tr>
+                            <td>MISSING_LINKS</td>
+                            <td>Required links missing</td>
+                        </tr>
+                        <tr>
+                            <td>ILLEGAL_LINK_TARGET</td>
+                            <td>Link is corresponding to illegal target</td>
+                        </tr>
+                        <tr>
+                            <td>UUID_NOT_UNIQUE</td>
+                            <td>The same UUID found multiple times during query</td>
+                        </tr>
+                        <tr>
+                            <td>LINK_MATCH_NOT_FOUND</td>
+                            <td>No legal targets corresponding to target in database</td>
+                        </tr>
+                        <tr>
+                            <td>MULTIPLE_LINKS_FOUND</td>
+                            <td>Multiple possible links for link. Eiffel standard rejects multiple links
+                                for the event meta type. AllowSeveralMatches is false for link</td>
+                        </tr>
+                        <tr>
+                            <th colspan="2">DatabaseException [1400]</th>
+                        </tr>
+                        <tr>
+                            <td>DUPLICATE_UUID_ERROR</td>
+                            <td>The sent events UUID is already in use by another event in the DB</td>
+                        </tr>
+                        <tr>
+                            <th colspan="2">LookupException [1500]</th>
+                        </tr>
+
+                    </table>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <h1 class="logo"><a href="../wiki.html">HOME</a></h1>
+            <img src="../img/logo_white.png" alt="evsent logo">
+            <script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+    </div>
+    <div class="clearer"></div>
+</div>
+<div class="footer">
+    &copy;2019, Evsent.
+
+    |
+    Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+    &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+
+</div>
+
+
+
+
+</body>
+</html>

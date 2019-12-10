@@ -1,0 +1,117 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Future development &#8212; wiki  documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="#" />
+    <link rel="search" title="Search" href="search.html" />
+
+    <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+</head><body>
+
+
+<div class="document">
+    <div class="documentwrapper">
+        <div class="bodywrapper">
+
+
+            <div class="body" role="main">
+
+
+                <h1 id="index">Future development ideas</h1>
+
+                <div class="genindex-jumpbox">
+                    <h2>Editions</h2>
+                    <p>Regarding editions/releases and staying up to date, the application has a way to automatically download
+                        the latest repository from git and extracting schemas (<a href="https://github.com/eiffel-community/eiffel">https://github.com/eiffel-community/eiffel</a>). To
+                        ensure compatibility with more releases than the latest one, the editions on
+                        <a href="https://github.com/eiffel-community/eiffel/releases">https://github.com/eiffel-community/eiffel/releases</a>
+                        must be updated in a similar way (regular git repository),
+                        or there is no way to generalize the download since we do not know the download links or release names beforehand.</p>
+                    <p>To generalize the handling of all editions, we recommend one of the following two options: </p>
+                    <ol>
+                        <li>Handling of old versions could be done using the git repository that exists today,
+                            the problem is that we have no way of knowing which schema belongs to which release (for example if version 2.0.0 belongs to toulouse,
+                            bordeaux or agen in /schemas/SomeEiffelEvent). In order to solve this, the naming convention of the releases could be changed – meaning
+                            that in each release, all schemas get +1 in version, regardless if they actually were changed or not. Then it would be very easy to
+                            match the events to old releases (for example if there was a new edition released, all schemas would be updated to 5.0.0) </li>
+                        <li>Generalize the page which posts new editions (<a href="https://github.com/eiffel-community/eiffel/releases">
+                            https://github.com/eiffel-community/eiffel/releases</a>) with a convention for the new link/edition names.
+                            Since the newer releases (Agen, Agen-1) only contain the relevant schemas, it will be easy to match correctly between
+                            editions and schemas going forward.</li>
+                    </ol>
+                    <p>Function to download new editions that are published on github exists, but has not been tested to guarantee full functionality to editions other than the required edition Agen-1. This functionality can be further developed to automatically support new editions.
+
+                        To ensure better compatibility between the Event Sender’s function to download protocols and the Eiffel Protocol on github, we recommend that the
+                        edition file on githib is structured in a way so that it is clear which meta.version for which event belongs to which edition.
+                        As of today, several meta.version for every event type are included in the newer editions. </p>
+                    <h2>Lookup</h2>
+                    <p> The Look up function is built to support more look ups than the three specified in the SRS, but these additional
+                        targets have not been tested and full functionality for additional look up targets can therefore not be guaranteed by us.
+                        By building on the existing functionality, the look up function can be able to cover more allowed look up targets than the
+                        one specified in the SRS. Specifically, validation of allowed targets should be further developed to control event type, link
+                        type and link target combinations and to work in older editions that Agen-1.</p>
+                    <h2>Customizing the Eiffel Protocol</h2>
+                    <p>Since the Event Sender acts as a filter between the client and the message bus it could thus be used as a tool to add customized
+                        to the Eiffel Protocol without changing the protocol in itself. New rules could be added on how the parameters work, what links are
+                        allowed in the look up and the Eiffel protocol could be overruled if wanted. This becomes an opportunity to add customized features
+                        to Eiffel while maintaining the Eiffel protocol the same and instead releasing new versions of the Event Sender. </p>
+                    <h2>Parameters</h2>
+                    <p>The two parameters AllowSeveralMatches (ASM) and AllowMissingMatch (AMM) are both link specific, this means that in order to set one
+                        of them or both for all links in one event, the client has to set ASM and AMM to the desired value for each look up. Adding two “umbrella”
+                        parameters would allow the client to set the values for all look up with one parameter. These two parameters could be added to the JSON parameter
+                        object and to overrule all link specific ASM and AMM. </p>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+    <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <h1 class="logo"><a href="../wiki.html">HOME</a></h1>
+            <img src="../img/logo_white.png" alt="evsent logo">
+            <script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+    </div>
+    <div class="clearer"></div>
+</div>
+<div class="footer">
+    &copy;2019, Evsent.
+
+    |
+    Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+    &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+
+</div>
+
+
+
+
+</body>
+</html>

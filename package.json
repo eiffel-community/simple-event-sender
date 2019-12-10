@@ -1,0 +1,51 @@
+{
+  "name": "simple_event_sender",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "jest --runInBand"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.liu.se/aaksu864/tdde-45-company-5-project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ajv": "^6.10.2",
+    "amqplib": "^0.5.5",
+    "axios": "^0.19.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "del": "^5.1.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "fs": "0.0.1-security",
+    "generate-schema": "^2.6.0",
+    "git-clone": "^0.1.0",
+    "json-schema-instantiator": "^0.4.8",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.7.3",
+    "nodemon": "^1.19.3",
+    "path": "^0.12.7",
+    "pug": "^2.0.4"
+  },
+  "devDependencies": {
+    "jest": "^24.9.0",
+    "jest-html-reporter": "^2.6.2"
+  },
+  "jest": {
+    "reporters": [
+      "default",
+      [
+        "./node_modules/jest-html-reporter",
+        {
+          "pageTitle": "Test Report",
+          "outputPath": "./tests/test_reports/test-report.html"
+        }
+      ]
+    ]
+  }
+}
