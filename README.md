@@ -281,6 +281,8 @@ Output is saved in a html-report in tests->test_reports
 - Boris Wu
 - Teodor Lennmark
 - Tong Zhang
+- Albin Ringertz
+- Emil Strandberg
 
 ## Simple Event Sender Developed by:
 - Teodor Lenmark
