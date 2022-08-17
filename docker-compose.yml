@@ -10,6 +10,7 @@ services:
   mongo:
     container_name: mongo
     image: mongo
+    hostname: mongo
     volumes:
       - mongodb_data:/data/db 
     ports:
@@ -32,6 +33,10 @@ services:
       - rabbitmq
     environment:
       WAIT_HOSTS: mongo:27017, rabbitmq:5672
+      RABBITMQ_URL: rabbitmq:5672
+      MONGODB_URL: mongo:27017
+      RABBITMQ_USER: rabbitmquser
+      RABBITMQ_PASSWORD: rabbitmqpassword
   rabbitmq:
    image: rabbitmq:3.7-management
    container_name: rabbitmq

@@ -53,6 +53,8 @@ REST API was chosen due to its stateless nature.
 ## Local run with Docker
 
 - Install Docker
+- Clone the git repository
+- In the git repository run npm install
 - In the git repository run command: " docker-compose up "
 - Go to `http://localhost:9000/` to check if running correctly.
 
