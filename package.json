@@ -13,7 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "ajv": "^6.10.2",
+    "ajv": "^6.12.3",
     "amqplib": "^0.5.5",
     "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
