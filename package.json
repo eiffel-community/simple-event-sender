@@ -30,7 +30,7 @@
     "mongoose": "^5.13.20",
     "nodemon": "^3.0.1",
     "path": "^0.12.7",
-    "pug": "^3.0.1"
+    "pug": "^3.0.3"
   },
   "devDependencies": {
     "jest": "^29.6.2",
