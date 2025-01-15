@@ -1,5 +1,7 @@
 <img width="103" height="125" src="doc/img/logo_white.png" align="right" />
 
+[![Archived badge](https://img.shields.io/badge/Stage-Archived-orange)](https://github.com/eiffel-community/community/blob/master/PROJECT_LIFECYCLE.md#stage-archived)
+
 # SimpleEventSender
 
 ## What is SimpleEventSender?
